@@ -20,7 +20,7 @@ func RegisterRoutes() http.Handler {
 	AuthRoutes(v1)
 	v1.Use(middlewares.JwtAuthMiddleware("my_secret_key"))
 	TourRoutes(v1)
-	SpinWheelRoute(v1)
+	SpinWheelRoutes(v1)
 
 	return router
 }

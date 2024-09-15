@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	giftModel "mit-api/pkg/gift/model"
+	rbacModel "mit-api/pkg/rbac/model"
 	spinWheelModel "mit-api/pkg/spin-wheel/model"
 	tourModel "mit-api/pkg/tour/model"
 	userGiftModel "mit-api/pkg/user-gift/model"
@@ -34,5 +35,5 @@ func New() {
 		log.Fatal(err)
 	}
 	DBInstance = db
-	db.AutoMigrate(&userModel.User{}, &tourModel.Tour{}, &userGiftModel.UserGift{}, &spinWheelModel.SpinWheel{}, &giftModel.Gift{})
+	db.AutoMigrate(&userModel.User{}, &tourModel.Tour{}, &userGiftModel.UserGift{}, &spinWheelModel.SpinWheel{}, &giftModel.Gift{}, &rbacModel.Role{}, &rbacModel.Permission{}, &rbacModel.RolePermission{})
 }

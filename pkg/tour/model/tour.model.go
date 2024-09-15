@@ -12,6 +12,7 @@ const (
 	Waiting Status = iota + 1 // EnumIndex = 1
 	Approve                   // EnumIndex = 2
 	Reject                    // EnumIndex = 3
+	Cancel                    // EnumIndex = 4
 )
 
 // String - Creating common behavior - give the type a String function

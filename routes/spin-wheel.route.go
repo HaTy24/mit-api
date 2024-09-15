@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SpinWheelRoute(incomingRoutes *gin.RouterGroup) {
+func SpinWheelRoutes(incomingRoutes *gin.RouterGroup) {
 	group := incomingRoutes.Group("/spin-wheels")
 	group.POST("/spin", spinwheel.Spin())
 }
