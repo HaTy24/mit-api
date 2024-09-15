@@ -1,0 +1,168 @@
+basePath: /v1
+definitions:
+  request.LoginRequest:
+    properties:
+      email:
+        example: hathienty1@gmail.com
+        type: string
+      password:
+        example: "123456"
+        type: string
+    type: object
+  request.RegisterTourRequest:
+    properties:
+      tourd_date:
+        type: string
+    type: object
+  request.SignUpRequest:
+    properties:
+      email:
+        example: hathienty1@gmail.com
+        type: string
+      first_name:
+        example: Ty
+        type: string
+      last_name:
+        example: Ha
+        type: string
+      password:
+        example: "123456"
+        type: string
+      phone_number:
+        example: "0948162501"
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server Petstore server.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: login
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: login
+      tags:
+      - Auth
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: signup
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.SignUpRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: signup
+      tags:
+      - Auth
+  /spin-wheels/spin:
+    post:
+      consumes:
+      - application/json
+      description: Spin
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: spin
+      tags:
+      - Tours
+  /tours:
+    get:
+      consumes:
+      - application/json
+      description: get list of Tours
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: getTours
+      tags:
+      - Tours
+    patch:
+      consumes:
+      - application/json
+      description: update Tour
+      parameters:
+      - description: tour
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterTourRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: updateTour
+      tags:
+      - Tours
+  /tours/{id}/cancel:
+    delete:
+      consumes:
+      - application/json
+      description: Cancel a specific Tour
+      parameters:
+      - description: Tour ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: cancelTour
+      tags:
+      - Tours
+  /tours/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new Tour
+      parameters:
+      - description: tour
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterTourRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: registerTour
+      tags:
+      - Tours
+securityDefinitions:
+  BearerAuth:
+    description: 'Provide your Bearer token in the format: Bearer <token>'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
