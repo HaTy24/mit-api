@@ -1,7 +1,7 @@
 package routers
 
 import (
-	spinwheel "mit-api/internal/api/spin-wheel"
+	spinwheel "mit-api/internal/api/spinwheelController"
 
 	"github.com/gin-gonic/gin"
 )

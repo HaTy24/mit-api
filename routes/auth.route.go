@@ -1,13 +1,13 @@
 package routers
 
 import (
-	"mit-api/internal/api/auth"
+	"mit-api/internal/api/authController"
 
 	"github.com/gin-gonic/gin"
 )
 
 func AuthRoutes(incomingRoutes *gin.RouterGroup) {
 	group := incomingRoutes.Group("/auth")
-	group.POST("/signup", auth.SignUp())
-	group.POST("/login", auth.Login())
+	group.POST("/signup", authController.SignUp())
+	group.POST("/login", authController.Login())
 }

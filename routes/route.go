@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"mit-api/internal/api/middlewares"
+	"mit-api/internal/middlewares"
 	"net/http"
 
 	docs "mit-api/docs"

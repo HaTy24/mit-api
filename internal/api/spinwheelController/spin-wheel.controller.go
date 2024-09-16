@@ -1,4 +1,4 @@
-package spinwheel
+package spinwheelController
 
 import (
 	spinWheelService "mit-api/pkg/spin-wheel/service"
