@@ -9,6 +9,7 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
+	"mit-api/internal/cache"
 	"mit-api/internal/database"
 	routers "mit-api/routes"
 )
@@ -16,6 +17,7 @@ import (
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	database.New()
+	cache.Connect()
 
 	// Declare Server config
 	server := &http.Server{
