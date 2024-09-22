@@ -1,4 +1,4 @@
-package tourController
+package controller
 
 import (
 	"log"

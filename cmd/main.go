@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"mit-api/server"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -23,10 +23,17 @@ func main() {
 		log.Fatal("Error loading .env file", err)
 	}
 
-	server := server.NewServer()
+	cfg := config{
+		address: os.Getenv("ADDRESS"),
+	}
+	app := &application{
+		config: cfg,
+	}
+
+	server := app.newServer()
 
 	err = server.ListenAndServe()
 	if err != nil {
-		panic(fmt.Sprintf("cannot start server: %s", err))
+		panic(fmt.Sprintf("Cannot start server: %s", err))
 	}
 }

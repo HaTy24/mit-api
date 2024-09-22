@@ -2,11 +2,15 @@ package tourService
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
+	"mit-api/internal/cache"
 	"mit-api/internal/database"
 	"mit-api/internal/types"
 	tourModel "mit-api/pkg/tour/model"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -44,6 +48,28 @@ func GetTours(userId uint) *types.OperationResult {
 	var ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	val := cache.Get(strconv.FormatUint(uint64(userId), 10))
+
+	jsonData, ok := val.([]byte)
+	if !ok {
+		fmt.Println("Type assertion failed")
+	}
+	var result map[string]interface{}
+	err := json.Unmarshal(jsonData, &result)
+	if err != nil {
+		fmt.Println("Error unmarshaling JSON:", err)
+	}
+	json.Unmarshal(jsonData, &val)
+	if val != nil {
+		return &types.OperationResult{
+			Success:  true,
+			Data:     &result,
+			Message:  "",
+			Code:     "",
+			HttpCode: http.StatusOK,
+		}
+	}
+
 	var tourRepo = database.DBInstance.WithContext(ctx).Model(&tourModel.Tour{})
 
 	var tours []tourModel.Tour
@@ -57,6 +83,16 @@ func GetTours(userId uint) *types.OperationResult {
 			TourdDate: tour.TourdDate,
 			Status:    tour.Status.String(),
 		})
+	}
+
+	newData, err := json.Marshal(toursWithStatus)
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = cache.Set(strconv.FormatUint(uint64(userId), 10), newData, 5*time.Minute)
+	if err != nil {
+		log.Println(err)
 	}
 
 	return &types.OperationResult{

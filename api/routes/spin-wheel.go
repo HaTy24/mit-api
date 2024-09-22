@@ -1,12 +1,12 @@
-package routers
+package route
 
 import (
-	spinwheel "mit-api/internal/api/spinwheelController"
+	controller "mit-api/api/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
 func SpinWheelRoutes(incomingRoutes *gin.RouterGroup) {
 	group := incomingRoutes.Group("/spin-wheels")
-	group.POST("/spin", spinwheel.Spin())
+	group.POST("/spin", controller.Spin())
 }

@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"fmt"
@@ -9,12 +9,20 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
+	route "mit-api/api/routes"
 	"mit-api/internal/cache"
 	"mit-api/internal/database"
-	routers "mit-api/routes"
 )
 
-func NewServer() *http.Server {
+type application struct {
+	config config
+}
+
+type config struct {
+	address string
+}
+
+func (app *application) newServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	database.New()
 	cache.Connect()
@@ -22,7 +30,7 @@ func NewServer() *http.Server {
 	// Declare Server config
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", port),
-		Handler:      routers.RegisterRoutes(),
+		Handler:      route.RegisterRoutes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

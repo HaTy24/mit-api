@@ -1,14 +1,16 @@
-package routers
+package route
 
 import (
-	"mit-api/internal/middlewares"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+	_ "github.com/joho/godotenv/autoload"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	middleware "mit-api/api/middlewares"
 	docs "mit-api/docs"
 
-	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func RegisterRoutes() http.Handler {
@@ -18,7 +20,7 @@ func RegisterRoutes() http.Handler {
 	// add swagger docs
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.PersistAuthorization(true)))
 	AuthRoutes(v1)
-	v1.Use(middlewares.JwtAuthMiddleware("my_secret_key"))
+	v1.Use(middleware.JwtAuthMiddleware("my_secret_key"))
 	TourRoutes(v1)
 	SpinWheelRoutes(v1)
 
