@@ -8,6 +8,7 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"go.uber.org/zap"
 
 	route "mit-api/api/routes"
 	"mit-api/internal/cache"
@@ -16,6 +17,7 @@ import (
 
 type application struct {
 	config config
+	logger *zap.SugaredLogger
 }
 
 type config struct {

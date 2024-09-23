@@ -19,6 +19,7 @@ func RegisterRoutes() http.Handler {
 	v1 := router.Group("/api/v1")
 	// add swagger docs
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.PersistAuthorization(true)))
+	v1.Use(middleware.LoggerMiddleware())
 	AuthRoutes(v1)
 	v1.Use(middleware.JwtAuthMiddleware("my_secret_key"))
 	TourRoutes(v1)

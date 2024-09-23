@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 // @title Swagger Example API
@@ -26,8 +27,12 @@ func main() {
 	cfg := config{
 		address: os.Getenv("ADDRESS"),
 	}
+	logger, _ := zap.NewProduction()
+	defer logger.Sync() // flushes buffer, if any
+	sugar := logger.Sugar()
 	app := &application{
 		config: cfg,
+		logger: sugar,
 	}
 
 	server := app.newServer()
