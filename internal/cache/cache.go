@@ -2,34 +2,24 @@ package cache
 
 import (
 	"context"
-	"log"
-	"os"
-	"strconv"
 	"time"
 
 	"github.com/redis/go-redis/v9"
 )
 
 var (
-	redisAddr = os.Getenv("REDIS_ADDR")
-	password  = os.Getenv("REDIS_PASSWORD")
-	Cache     *redis.Client
+	Cache *redis.Client
 )
 
-func Connect() {
-	redisDBStr := os.Getenv("REDIS_DB")
-	redisDB, err := strconv.Atoi(redisDBStr)
-	if err != nil {
-		log.Fatalf("Invalid REDIS_DB value: %v", err)
-	}
-
+func Connect(redisAddr string, password string, redisDB int) *redis.Client {
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisAddr,
 		Password: password,
 		DB:       redisDB,
 	})
-
 	Cache = client
+
+	return client
 }
 
 func Set(key string, value interface{}, ttl time.Duration) error {
